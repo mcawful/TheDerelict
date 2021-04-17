@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.revature.thederelict.services;
+package com.revature.thederelict;
 
 import lombok.experimental.UtilityClass;
 
