@@ -10,10 +10,13 @@ import com.revature.thederelict.enums.Exit;
 import com.revature.thederelict.exceptions.InvalidExitException;
 import com.revature.thederelict.models.Room;
 
+import lombok.experimental.UtilityClass;
+
 /**
  * @author Michael McAuliffe
  *
  */
+@UtilityClass
 public class NavRouter {
 
 	/**
@@ -26,9 +29,8 @@ public class NavRouter {
 	 * @param room
 	 * @return
 	 */
-	public NavRouter addRoom(Room room) {
+	public void addRoom(Room room) {
 		rooms.add(room);
-		return this;
 	}
 
 	/**
