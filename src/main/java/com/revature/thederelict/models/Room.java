@@ -45,6 +45,8 @@ public abstract class Room {
 		this.inventory.add(item);
 	}
 	
+	// TODO: probably should have a removeItem method as well
+	
 	/**
 	 * 
 	 * @param exit
