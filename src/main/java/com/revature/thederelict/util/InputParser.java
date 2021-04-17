@@ -6,10 +6,13 @@ package com.revature.thederelict.util;
 import com.revature.thederelict.enums.Interaction;
 import com.revature.thederelict.exceptions.UnknownActionException;
 
+import lombok.experimental.UtilityClass;
+
 /**
  * @author Michael McAuliffe
  *
  */
+@UtilityClass
 public class InputParser {
 
 	public void parse(String input) throws Exception {
