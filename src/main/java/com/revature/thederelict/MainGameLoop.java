@@ -16,12 +16,18 @@ import com.revature.thederelict.enums.Color;
 
 import lombok.experimental.UtilityClass;
 
+import java.util.Scanner;
+import java.io.IOException;
+
 /**
  * @author Michael McAuliffe
  *
  */
 @UtilityClass
 public class MainGameLoop {
+
+	// Scanner initialization
+	Scanner sc = new Scanner(System.in);
 
 	// Room initialization
 	private Room bridge = new Bridge();
@@ -46,12 +52,12 @@ public class MainGameLoop {
 
 	// Key Initialization
 	private List<Interaction> keyInteractions = new ArrayList<Interaction>(Interaction.LOOK, Interaction.L, Interaction.GET);
-	private Item red = new Key("CHIPDECK", "a vermillion datachip deck", "This deck of vermillion datachips fills your hand and contains backups of all of the research your vessel has conducted on this venture.  Though the escape pod may technically operate without this, your vessel will have been lost for nothing if you leave it behind.", keyInteractions, 6, Color.RED);
-	private Item orange = new Key("NAVCHIP", "an orange navigation chip", "An orange datachip approximately the size of your palm containing backups of system navigation charts intended for use in emergencies.", keyInteractions, 5, Color.ORANGE);
-	private Item yellow = new Key("SOSCHIP", "an aggressively yellow datachip", "Two fingers wide and three tall, this datachip is on the smaller end and might have been dangerously easy to overlook if not for its intensely, aggressively yellow colouration.  The chip contains SOS broadcasts in at least 387 known languages and on 96 communication protocols.  Of course, it is also behind on updates, so there are at least 7 new protocols it\'s missing, and you aren\'t sure how many languages.  Perhaps you should have updated that before your last launch.", keyInteractions, 3, Color.YELLOW);
-	private Item green = new Key("COMMANDCHIP", "a viridian command chip", "Long and narrow, this viridian green datachip is approximately the size of your index finger and is utilized by engine command consoles to monitor critical status information for the engines, allowing their safe operation.", keyInteractions, 4, Color.GREEN);
-	private Item blue = new Key("IDCHIP", "a small blue identity chip", "Scarcely larger than your pinkie tip, this diminutive, navy blue datachip contains the ship\'s system IDs - critical information for communicating with possible rescue operations.", keyInteractions, 1, Color.BLUE);
-	private Item violet = new Key("SCANCHIP", "a violet scan chart datachip", "So bright a violet as to be nearly fuchsia, this datachip is no more than one square inch in size, but contains all of the essential black box data for your ship, including local spatial scans.  In addition to being necessary to find out what happened here, the information on this chip could prevent your escape pod from meeting the same end.  It would be wise to bring this with you.", keyInteractions, 2, Color.VIOLET);
+	private Item chipdeck = new Key("CHIPDECK", "a vermillion datachip deck", "This deck of vermillion datachips fills your hand and contains backups of all of the research your vessel has conducted on this venture.  Though the escape pod may technically operate without this, your vessel will have been lost for nothing if you leave it behind.", keyInteractions, 6, Color.RED);
+	private Item navchip = new Key("NAVCHIP", "an orange navigation chip", "An orange datachip approximately the size of your palm containing backups of system navigation charts intended for use in emergencies.", keyInteractions, 5, Color.ORANGE);
+	private Item soschip = new Key("SOSCHIP", "an aggressively yellow datachip", "Two fingers wide and three tall, this datachip is on the smaller end and might have been dangerously easy to overlook if not for its intensely, aggressively yellow colouration.  The chip contains SOS broadcasts in at least 387 known languages and on 96 communication protocols.  Of course, it is also behind on updates, so there are at least 7 new protocols it\'s missing, and you aren\'t sure how many languages.  Perhaps you should have updated that before your last launch.", keyInteractions, 3, Color.YELLOW);
+	private Item commandchip = new Key("COMMANDCHIP", "a viridian command chip", "Long and narrow, this viridian green datachip is approximately the size of your index finger and is utilized by engine command consoles to monitor critical status information for the engines, allowing their safe operation.", keyInteractions, 4, Color.GREEN);
+	private Item idchip = new Key("IDCHIP", "a small blue identity chip", "Scarcely larger than your pinkie tip, this diminutive, navy blue datachip contains the ship\'s system IDs - critical information for communicating with possible rescue operations.", keyInteractions, 1, Color.BLUE);
+	private Item scanchip = new Key("SCANCHIP", "a violet scan chart datachip", "So bright a violet as to be nearly fuchsia, this datachip is no more than one square inch in size, but contains all of the essential black box data for your ship, including local spatial scans.  In addition to being necessary to find out what happened here, the information on this chip could prevent your escape pod from meeting the same end.  It would be wise to bring this with you.", keyInteractions, 2, Color.VIOLET);
 	
 	public void startGameLoop() {
 		
@@ -77,44 +83,122 @@ public class MainGameLoop {
 		// Load items into bridge
 		bridge.addItem(halfconsole);
 		bridge.addItem(comstation);
-		bridge.addItem(chiar);
+		bridge.addItem(chair);
 		bridge.addItem(emergencyConsole);
 
 		// Load items into hall
 		hall.addItem(cache);
-		hall.addItem(orange);
-		hall.addItem(blue);
+		hall.addItem(navchip);
+		hall.addItem(idchip);
 		hall.addItem(wreckage);
 
 		// Load items into engine
 		engine.addItem(wreckage);
-		engine.addItem(green);
+		engine.addItem(commandchip);
 		engine.addItem(halfconsole);
-		engine.addItem(yellow);
+		engine.addItem(soschip);
 		engine.addItem(suit);
 
 		// Load items into lab
 		lab.addItem(wreckage);
-		lab.addItem(red);
+		lab.addItem(chipdeck);
 		lab.addItem(halfconsole);
 		lab.addItem(spill);
-		lab.addItem(violet);
+		lab.addItem(scanchip);
 		lab.addItem(glass);
 
 		// Load items into pod
 		pod.addItem(terminal);
 		
 		// TODO: add initializers  that take place BEFORE the game loop
+
+		System.out.printLn("\*\*BEEP BEEP BEEP BEEP\*\*");
+		System.out.printLn("");
+		System.out.printLn("An incessant beeping sound rouses you.  With consiousness comes the awareness first of a throbbing ache at your temple, and then of the angry red pulse of emergency lighting.");
+		cont();
+		System.out.printLn("");
+		System.out.printLn("\"...ected.  Please identify.\"");
+		System.out.printLn("");
+		System.out.printLn("The artificially mild voice of the ship\'s computers drifts through the bridge, its flat affect at sharp odds with the vessel\'s obvious state of disrepair.");
+		cont();
+		System.out.printLn("");
+		System.out.printLn("\"Lifeform detected.  Please identify.\"");
+		System.out.printLn("");
+		System.out.printLn("It won\'t stop asking until you answer.  Your mind is a bit fuzzy, likely due to the blow you seem to have taken to your head, but all it wants is your name.  That should be easy enough.");
+		System.out.printLn("");
+		System.out.printLn("What is your name?");
+		String name = sc.nextLine();
+		Player pc = new Player(name.trim());
+		System.out.printLn("\"Confirmed.  " + pc.getName().toUpperCase() + " is advised that ship systems are damaged beyond repair.  Emergency evacuation is strongly recommended.\"");
+		System.out.printLn("");
+		System.out.printLn("As far as greetings go, you\'ve definitely heard better.");
+		System.out.printLn("");
+		System.out.printLn("Carefully, you rise to your feet and take stock of your surroundings.");
+
+		Room currentRoom = bridge;
 		
+		look();
+
 		/*
 		 * Indicates if the game loop should continue
 		 */
 		boolean continueLoop = true;
 		
 		while(continueLoop) {
-			// TODO: game loop logic should live in here
+			String action;
+			String target;
+			try {
+				String input = sc.nextLine();
+				if (input.trim().contains(" ")) {
+					ArrayList<String> wordList = new ArrayList<String>();
+					for(String word : input.split(" ")) {
+    					wordList.add(word);
+					}
+					action = wordList.getItem(0).toUpperCase();
+					target = wordList.getItem(1).toUpperCase();
+				}
+				else {
+					action = input.toUpperCase();
+				}
+			}
+			catch (IOException e) {
+			};
 		}
 		
 		// TODO: add initializers that take place AFTER the game loop
+
+	}
+
+	// Press any key to continue...
+	private void cont() {
+		System.out.printLn("Press enter to continue...");
+		try {System.in.read();}
+		catch(IOException e) {
+		};
+	}
+
+	private void look() {
+		System.out.printLn(currentRoom.getDescription());
+		System.out.printLn("");
+		System.out.print("In this room, you can see ");
+		for (Item i : currentRoom.getInventory()) {
+			system.out.print(i.getDescShort() + ", ");
+		};
+		System.out.print("as well as the following exit(s):");
+		System.out.printLn("");
+		System.out.printLn(currentRoom.getExits());
+	}
+
+	private void look(Item i) {
+		System.out.printLn(i.getDescLong());
+		System.out.printLn("");
+	}
+
+	private void here() {
+		System.out.printLn("Items here: ");
+		for (Item i : currentRoom.getInventory()) {
+			System.out.printLn(i.getId() + " : " + i.getDescShort());
+		}
+		System.out.printLn("");
 	}
 }
