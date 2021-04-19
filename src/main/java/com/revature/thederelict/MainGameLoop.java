@@ -42,7 +42,7 @@ public class MainGameLoop {
 	private Item halfconsole = new Item("HALFCONSOLE", "half of a console", "One half of a system console stands here, still sparking and smouldering from whatever ripped the other half off.  You won't be using that any time soon.", unusable);
 	private Item comstation = new Item("COMSTATION", "a damaged workstation", "What was once the communications workstation for the ship now stands dark and unresponsive but for the flashing \"OUT OF ORDER\" indicator.", unusable);
 	private Item chair = new Item("CHAIR", "a broken chair", "Toppled over and snapped at the base by whatever devastated the rest of the bridge, this formerly plush brown chair is no longer usable, the seat being badly charred, with one arm missing entirely and nothing upon which to rest.  You aren\'t certain where the rest of the chair is, but you certainly won\'t be sitting in it now.", pointless);
-	private Item emergencyConsole = new Item("CONSOLE", "an emergency console", "Seeming to be one of, if not the, only operable parts of the computer system, a small emergency terminal set into the wall glows with a quiet blue light but for several red warning indicators.  You may be able to learn more about what\'s happening here.", new ArrayList<Interaction>(Interaction.LOOK, Interaction.L, Interaction.USE));
+	private Item emergencyconsole = new Item("CONSOLE", "an emergency console", "Seeming to be one of, if not the, only operable parts of the computer system, a small emergency terminal set into the wall glows with a quiet blue light but for several red warning indicators.  You may be able to learn more about what\'s happening here.", new ArrayList<Interaction>(Interaction.LOOK, Interaction.L, Interaction.USE));
 	private Item cache = new Item("CACHE", "a broken maintenance cache", "Built into one of the main walls is a maintenance cache containing several tools intended for ship repairs.  Most of them appear to be melted, damaged, or broken.", unusable);
 	private Item wreckage = new Item("WRECKAGE", "smouldering wreckage", "Cut off from its source by the emergency containment barriers, a small pile of smouldering wreckage sits here, twisted beyond recognition.", unusable);
 	private Item suit = new Item("SUIT", "a massive space suit", "Constructed of lightweight, durable material, this space suit appears to be one of the few things that has made it through the damage to your vessel mostly unscathed.  Of course, it also appears to have been left behind by one of the alien engineers who handled your repairs the last time you docked.  You are fairly sure this would not fit any human anatomy.", pointless);
@@ -84,7 +84,7 @@ public class MainGameLoop {
 		bridge.addItem(halfconsole);
 		bridge.addItem(comstation);
 		bridge.addItem(chair);
-		bridge.addItem(emergencyConsole);
+		bridge.addItem(emergencyconsole);
 
 		// Load items into hall
 		hall.addItem(cache);
@@ -139,6 +139,9 @@ public class MainGameLoop {
 		
 		look();
 
+		System.out.printLn("Hint: use the command HERE to see a list of items you can interact with.");
+		System.out.printLn("");
+
 		/*
 		 * Indicates if the game loop should continue
 		 */
@@ -155,7 +158,7 @@ public class MainGameLoop {
     					wordList.add(word);
 					}
 					action = wordList.getItem(0).toUpperCase();
-					target = wordList.getItem(1).toUpperCase();
+					target = wordList.getItem(1).toLowerCase();
 				}
 				else {
 					action = input.toUpperCase();
