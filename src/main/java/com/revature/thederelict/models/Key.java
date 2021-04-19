@@ -3,7 +3,10 @@
  */
 package com.revature.thederelict.models;
 
+import java.util.List;
+
 import com.revature.thederelict.enums.Color;
+import com.revature.thederelict.enums.Interaction;
 
 import lombok.Data;
 
