@@ -8,13 +8,17 @@ import java.util.List;
 import com.revature.thederelict.enums.Interaction;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 /**
  * @author Michael McAuliffe
  *
  */
 @Data
+@NoArgsConstructor
+@RequiredArgsConstructor
 public class Item {
 
 	@NonNull

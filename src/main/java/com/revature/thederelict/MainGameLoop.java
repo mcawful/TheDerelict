@@ -15,6 +15,7 @@ import com.revature.thederelict.models.Pod;
 import com.revature.thederelict.models.Room;
 import com.revature.thederelict.util.NavRouter;
 import com.revature.thederelict.enums.Interaction;
+import com.revature.thederelict.exceptions.InvalidExitException;
 import com.revature.thederelict.enums.Color;
 
 import lombok.experimental.UtilityClass;
@@ -33,7 +34,7 @@ import java.io.IOException;
 public class MainGameLoop {
 
 	// Scanner initialization
-	Scanner sc = new Scanner(System.in);
+	private Scanner sc = new Scanner(System.in);
 
 	// Room initialization
 	private Room bridge = new Bridge();
@@ -196,59 +197,123 @@ public class MainGameLoop {
 			String action;
 			String target = null;
 			String input = sc.nextLine();
-			if (input.trim().contains(" ")) {
-				ArrayList<String> wordList = new ArrayList<>();
-				for (String word : input.split(" ")) {
-					wordList.add(word);
-				}
-				action = wordList.get(0).toUpperCase();
-				target = wordList.get(1).toUpperCase();
-			} else {
-				action = input.toUpperCase();
+
+			ArrayList<String> wordList = new ArrayList<>();
+			for (String word : input.toUpperCase().split(" ")) {
+				wordList.add(word);
 			}
-			
+			action = wordList.get(0);
+
+			if (wordList.size() > 1)
+				target = wordList.get(1);
+
 			try {
 				Interaction attemptedAction = Interaction.valueOf(action);
 				Item attemptedItem = null;
-				
-				if(target != null) {
-					
-					for(Item i : currentRoom.getInventory()) {
-						if(i.getId() == target) {
+				Item attemptedOnHandItem = null;
+
+				if (target != null) {
+
+					for (Item i : currentRoom.getInventory())
+						if (i.getId().equals(target)) {
 							attemptedItem = i;
 							break;
 						}
+
+					for (Item i : pc.getKeyInv()) {
+						if (i.getId().equals(target)) {
+							attemptedOnHandItem = i;
+							break;
+						} else
+							attemptedOnHandItem = new Item();
+					}
+
+					for (Item i : pc.getItemInv()) {
+						if (i.getId().equals(target)) {
+							attemptedOnHandItem = i;
+							break;
+						} else
+							attemptedOnHandItem = new Item();
 					}
 				}
-				
+
 				switch (action) {
 				case "GET":
-					if(attemptedItem == null) {
+					if (attemptedItem == null) {
 						System.out.println("What are you trying to get?\n");
 						break;
 					}
-					
-					currentRoom.removeItem(attemptedItem);
-					
-					if(attemptedItem instanceof Key) {
+
+					if (attemptedItem instanceof Key) {
 						pc.addKey(attemptedItem);
-						System.out.println("You added the " + attemptedItem.getDescShort() + " to your inventory.\n");
-					}
-					else if(attemptedItem.getInteractions().contains(attemptedAction)) {
+						currentRoom.removeItem(attemptedItem);
+						System.out.println("You added " + attemptedItem.getDescShort() + " to your inventory.\n");
+					} else if (attemptedItem.getInteractions().contains(attemptedAction)) {
 						pc.addItem(attemptedItem);
-						System.out.println("You added the " + attemptedItem.getDescShort() + " to your inventory.\n");
-					}
-					else
+						currentRoom.removeItem(attemptedItem);
+						System.out.println("You added " + attemptedItem.getDescShort() + " to your inventory.\n");
+					} else
 						System.out.println("You cannot get that item.\n");
 					break;
 
 				case "DROP":
-					if(!(attemptedItem instanceof Key))
+					if (attemptedOnHandItem == null) {
+						System.out.println("Drop what now?\n");
+						break;
+					}
+
+					if (pc.getKeyInv().contains(attemptedOnHandItem))
+						System.out.println("This looks too important to leave behind.\n");
+
+					else if (pc.getItemInv().contains(attemptedOnHandItem)) {
+						pc.getItemInv().remove(attemptedOnHandItem);
+						currentRoom.addItem(attemptedOnHandItem);
+						System.out.println("You dropped " + attemptedOnHandItem.getDescShort() + " into the room.\n");
+					} else
+						System.out.println("You don't have one of those to drop.\n");
+
+					break;
+
+				case "HERE":
+					here(currentRoom);
+					break;
+
+				case "LOOK":
+				case "L":
+					if (target == null)
+						look(currentRoom);
+
+					else if (currentRoom.getInventory().contains(attemptedItem))
+						look(attemptedItem);
+
+					else if (pc.getItemInv().contains(attemptedOnHandItem)
+							|| pc.getKeyInv().contains(attemptedOnHandItem))
+						look(attemptedOnHandItem);
+					else
+						System.out.println(
+								"You stare and ponder life for a moment...also what are you trying to look at?\n");
+					break;
+
+				case "GO":
+				case "MOVE":
+					if(target == null) {
+						System.out.println("Where are you trying to go?\n");
+						break;
+					}
+					
+					try {
+						Exit attemptedExit = Exit.valueOf(target);
+						currentRoom = NavRouter.navigate(currentRoom, attemptedExit);
+						look(currentRoom);
+					} catch (IllegalArgumentException e) {
+						System.out.println("Where are you trying to go?\n");
+					} catch (InvalidExitException e) {
+					}
 					break;
 				default:
 					break;
 				}
-				
+
 			} catch (IllegalArgumentException e) {
 				System.out.println("I don't know what you're trying to do.\n");
 			}

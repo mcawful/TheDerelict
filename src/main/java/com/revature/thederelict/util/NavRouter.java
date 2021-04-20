@@ -39,8 +39,16 @@ public class NavRouter {
 	 * @return
 	 * @throws InvalidExitException
 	 */
-	public Room navigate(Exit exit) throws InvalidExitException {
-		return rooms.stream().filter(room -> room.getExits().contains(exit)).findFirst()
-				.orElseThrow(InvalidExitException::new);
+	public Room navigate(Room currentRoom, Exit exit) throws InvalidExitException {
+		
+		if(currentRoom.getExits().contains(exit)) {
+			for(Room room : rooms)
+				if(room.getName().equals(exit.toString()))
+					return room;
+		}
+		else
+			throw new InvalidExitException();
+		
+		return currentRoom;
 	}
 }
