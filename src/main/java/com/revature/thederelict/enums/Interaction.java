@@ -18,5 +18,6 @@ public enum Interaction {
 	USE,
 	HERE,
 	GO,
-	MOVE
+	MOVE,
+	INV
 }

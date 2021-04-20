@@ -155,7 +155,6 @@ public class MainGameLoop {
 		// Load items into pod
 		pod.addItem(terminal);
 
-		// TODO: add initializers that take place BEFORE the game loop
 
 		System.out.println("**BEEP BEEP BEEP BEEP**");
 		System.out.println();
@@ -314,14 +313,20 @@ public class MainGameLoop {
 					if (target == null)
 						System.out.println("You flail your arms wildly! This seems to have accomplished nothing.\n");
 
-					if (attemptedItem == emergencyconsole)
+					if (attemptedItem == emergencyconsole) {
 						emergencyConsoleMenu();
+					}
 
-					if (attemptedItem == terminal)
+					else if (attemptedItem == terminal) {
 						terminalMenu(pc);
+					}
 
 					else
 						System.out.println("You cannot use that.\n");
+					break;
+					
+				case "INV":
+					inventory(pc);
 					break;
 				default:
 					break;
@@ -336,7 +341,6 @@ public class MainGameLoop {
 		System.out.println("You have escaped The Derelict!! Congratulations!");
 	}
 
-	// TODO: add initializers that take place AFTER the game loop
 
 	// Press any key to continue...
 	private void cont() {
@@ -367,9 +371,25 @@ public class MainGameLoop {
 
 	private void here(Room currentRoom) {
 		System.out.println("Items here: ");
-		for (Item i : currentRoom.getInventory()) {
+		for (Item i : currentRoom.getInventory()) 
 			System.out.println(i.getId() + " : " + i.getDescShort());
-		}
+		
+		System.out.println();
+	}
+	
+	private void inventory(Player pc) {
+		System.out.println("Items carried: ");
+		
+		if(pc.getItemInv().size() == 0 && pc.getKeyInv().size() == 0)
+			System.out.println("No items are in your inventory!");
+		
+		for (Item i : pc.getItemInv()) 
+			System.out.println(i.getId() + " : " + i.getDescShort());
+		
+		
+		for(Item k : pc.getKeyInv())
+			System.out.println(k.getId() + " : " + k.getDescShort());
+		
 		System.out.println();
 	}
 
@@ -396,12 +416,14 @@ public class MainGameLoop {
 				case 4:
 					System.out.println(">> Exiting...\n");
 					continueLoop = false;
+					sc.nextLine();
 					break;
 				default:
 					System.out.println(">> Invalid selection!\n");
 					break;
 				}
 			} catch (Exception e) {
+				sc.nextLine();
 				System.out.println(">> Invalid selection!\n");
 			}
 		}
@@ -437,12 +459,14 @@ public class MainGameLoop {
 					case 2:
 						System.out.println(">> Exiting...\n");
 						continueLoop = false;
+						sc.nextLine();
 						break;
 					default:
 						System.out.println(">> Invalid selection!\n");
 						break;
 					}
 				} catch (Exception e) {
+					sc.nextLine();
 					System.out.println(">> Invalid selection!\n");
 				}
 			}
@@ -463,12 +487,14 @@ public class MainGameLoop {
 					case 2:
 						System.out.println(">> Exiting...\n");
 						continueLoop = false;
+						sc.nextLine();
 						break;
 					default:
 						System.out.println(">> Invalid selection!\n");
 						break;
 					}
 				} catch (Exception e) {
+					sc.nextLine();
 					System.out.println(">> Invalid selection!\n");
 				}
 			}
@@ -516,6 +542,7 @@ public class MainGameLoop {
 					break;
 				}
 			} catch (Exception e) {
+				sc.nextLine();
 				System.out.println("Invalid selection!\n");
 			}
 		}
