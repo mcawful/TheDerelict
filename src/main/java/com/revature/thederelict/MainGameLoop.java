@@ -33,6 +33,10 @@ import java.io.IOException;
 @UtilityClass
 public class MainGameLoop {
 
+	// Game flags
+	boolean gameLoop = true;
+	boolean keysInserted = false;
+	
 	// Scanner initialization
 	private Scanner sc = new Scanner(System.in);
 
@@ -188,12 +192,7 @@ public class MainGameLoop {
 		System.out.println("Hint: use the command HERE to see a list of items you can interact with.");
 		System.out.println();
 
-		/*
-		 * Indicates if the game loop should continue
-		 */
-		boolean continueLoop = true;
-
-		while (continueLoop) {
+		while (gameLoop) {
 			String action;
 			String target = null;
 			String input = sc.nextLine();
@@ -296,11 +295,11 @@ public class MainGameLoop {
 
 				case "GO":
 				case "MOVE":
-					if(target == null) {
+					if (target == null) {
 						System.out.println("Where are you trying to go?\n");
 						break;
 					}
-					
+
 					try {
 						Exit attemptedExit = Exit.valueOf(target);
 						currentRoom = NavRouter.navigate(currentRoom, attemptedExit);
@@ -310,6 +309,20 @@ public class MainGameLoop {
 					} catch (InvalidExitException e) {
 					}
 					break;
+
+				case "USE":
+					if (target == null)
+						System.out.println("You flail your arms wildly! This seems to have accomplished nothing.\n");
+
+					if (attemptedItem == emergencyconsole)
+						emergencyConsoleMenu();
+
+					if (attemptedItem == terminal)
+						terminalMenu(pc);
+
+					else
+						System.out.println("You cannot use that.\n");
+					break;
 				default:
 					break;
 				}
@@ -318,6 +331,9 @@ public class MainGameLoop {
 				System.out.println("I don't know what you're trying to do.\n");
 			}
 		}
+		
+		System.out.println("As the pod hurtles into space, the quiet hum of the engines and the pale flash of the outgoing SOS call fill the enclosure, and, outside of the small window on the pod, you watch as the derelict remains of your ship fade into the distance.\n");
+		System.out.println("You have escaped The Derelict!! Congratulations!");
 	}
 
 	// TODO: add initializers that take place AFTER the game loop
@@ -355,5 +371,153 @@ public class MainGameLoop {
 			System.out.println(i.getId() + " : " + i.getDescShort());
 		}
 		System.out.println();
+	}
+
+	private void emergencyConsoleMenu() {
+		boolean continueLoop = true;
+
+		while (continueLoop) {
+			System.out.println("\n>> Choose an option:\n" + "   >> 1: SHIP STATUS\n" + "   >> 2: EMERGENCY PROTOCOLS\n"
+					+ "   >> 3: CRITICAL SYSTEMS\n" + "   >> 4: EXIT\n\n");
+			try {
+				int choice = sc.nextInt();
+
+				switch (choice) {
+				case 1:
+					ecSubMenu();
+					break;
+				case 2:
+					System.out.println(
+							">> Emergency systems activated.  Breach containment activated.  Engine containment activated.  Recommendation: locate and utilize escape pod immediately.\n");
+					break;
+				case 3:
+					System.out.println(">> ALL SYSTEMS CRITICAL! EVACUATE IMMEDIATELY!\n");
+					break;
+				case 4:
+					System.out.println(">> Exiting...\n");
+					continueLoop = false;
+					break;
+				default:
+					System.out.println(">> Invalid selection!\n");
+					break;
+				}
+			} catch (Exception e) {
+				System.out.println(">> Invalid selection!\n");
+			}
+		}
+
+	}
+
+	private void terminalMenu(Player pc) {
+		boolean continueLoop = true;
+		
+		while (continueLoop) {
+			if(!keysInserted) {
+				System.out.println(">> Databanks corrupt.  Please provide datachips to restore system operation:\n");
+				System.out.println("   >> 1: INSERT DATA CHIPS\n"
+								+ "   >> 2: EXIT\n\n");
+				
+				try {
+					int choice = sc.nextInt();
+
+					switch (choice) {
+					case 1:
+						if(pc.getKeyInv().size() == 6) {
+							System.out.println("As you feed in the datachips, the system buzzes thoughtfully, processing the information, before returning the chips.  A bright blue message flashes to life across the screen.  Looks like it worked!\n");
+							keysInserted = true;
+						}
+						
+						else if(pc.getKeyInv().size() == 0)
+							System.out.println("You insert your fingers into the terminal. Turns out flesh and bone do not contain the needed circuitry for this task.\n");
+							
+						else {
+							System.out.println("As you feed in the datachips, the system buzzes thoughtfully before returning the chips with a vivid red error message scrolling across the screen.  It seems you are missing some datachips.\n");
+						}
+						break;
+					case 2:
+						System.out.println(">> Exiting...\n");
+						continueLoop = false;
+						break;
+					default:
+						System.out.println(">> Invalid selection!\n");
+						break;
+					}
+				} catch (Exception e) {
+					System.out.println(">> Invalid selection!\n");
+				}
+			}
+			
+			else {
+				System.out.println(">> Launch sequence ready.  Initiate?\n"
+								+ "   >> 1: YES\n"
+								+ "   >> 2: NO\n\n");
+				try {
+					int choice = sc.nextInt();
+
+					switch (choice) {
+					case 1:
+						System.out.println(">> INITATING LAUNCH SEQUENCE\n");
+						continueLoop = false;
+						gameLoop = false;
+						break;
+					case 2:
+						System.out.println(">> Exiting...\n");
+						continueLoop = false;
+						break;
+					default:
+						System.out.println(">> Invalid selection!\n");
+						break;
+					}
+				} catch (Exception e) {
+					System.out.println(">> Invalid selection!\n");
+				}
+			}
+		}
+	}
+
+	private void ecSubMenu() {
+		boolean continueLoop = true;
+		while (continueLoop) {
+			System.out.println(">> Select ship system:\n" + "   >> 1: O2\n" + "   >> 2: COMMUNICATIONS\n"
+					+ "   >> 3: ENGINES\n" + "   >> 4: WEAPONS\n" + "   >> 5: CONTAINMENT SYSTEMS\n"
+					+ "   >> 6: NAVIGATION\n" + "   >> 7: ESCAPE POD\n" + "   >> 8: EXIT TO MAIN MENU\n\n");
+			try {
+				int choice = sc.nextInt();
+
+				switch (choice) {
+				case 1:
+					System.out.println(
+							">> Main system inoperable.  Emergency subsystem activated.  Recommend immediate docking for critical repairs.\n");
+					break;
+				case 2:
+				case 6:
+					System.out.println(
+							">> Main system inoperable.  Emergency subsystem inoperable.  Recommend immediate docking for critical repairs.\n");
+					break;
+				case 3:
+					System.out.println(
+							">> System inoperable.  Emergency containment measures active.  Recommend immediate evacuation.\n");
+					break;
+				case 4:
+					System.out.println(">> System inoperable.  Recommend immediate docking for critical repairs.\n");
+					break;
+				case 5:
+					System.out.println(">> System operating as expected.\n");
+					break;
+				case 7:
+					System.out.println(">> Escape pod operational. Pod databanks corrupted. Recommend immediate data restoration.\n");
+					break;
+				case 8:
+					System.out.println(">> Exiting to main menu...\n");
+					continueLoop = false;
+					break;
+				default:
+					System.out.println("Invalid selection!\n");
+					break;
+				}
+			} catch (Exception e) {
+				System.out.println("Invalid selection!\n");
+			}
+		}
 	}
 }
