@@ -8,10 +8,6 @@ package com.revature.thederelict.enums;
  *
  */
 public enum Exit {
-	
-	BRIDGE,
-	LAB,
-	HALL,
-	ENGINE,
-	POD
+
+	BRIDGE, LAB, HALL, ENGINE, POD
 }

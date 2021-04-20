@@ -23,13 +23,13 @@ public class Item {
 
 	@NonNull
 	private String id;
-	
+
 	@NonNull
 	private String descShort;
-	
+
 	@NonNull
 	private String descLong;
-	
+
 	@NonNull
 	private List<Interaction> interactions;
 }

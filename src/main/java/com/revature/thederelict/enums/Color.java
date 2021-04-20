@@ -9,10 +9,5 @@ package com.revature.thederelict.enums;
  */
 public enum Color {
 
-	RED,
-	ORANGE,
-	YELLOW,
-	GREEN,
-	BLUE,
-	VIOLET
+	RED, ORANGE, YELLOW, GREEN, BLUE, VIOLET
 }

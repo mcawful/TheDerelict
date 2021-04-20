@@ -36,7 +36,7 @@ public class MainGameLoop {
 	// Game flags
 	boolean gameLoop = true;
 	boolean keysInserted = false;
-	
+
 	// Scanner initialization
 	private Scanner sc = new Scanner(System.in);
 
@@ -154,7 +154,6 @@ public class MainGameLoop {
 
 		// Load items into pod
 		pod.addItem(terminal);
-
 
 		System.out.println("**BEEP BEEP BEEP BEEP**");
 		System.out.println();
@@ -324,7 +323,7 @@ public class MainGameLoop {
 					else
 						System.out.println("You cannot use that.\n");
 					break;
-					
+
 				case "INV":
 					inventory(pc);
 					break;
@@ -336,11 +335,11 @@ public class MainGameLoop {
 				System.out.println("I don't know what you're trying to do.\n");
 			}
 		}
-		
-		System.out.println("As the pod hurtles into space, the quiet hum of the engines and the pale flash of the outgoing SOS call fill the enclosure, and, outside of the small window on the pod, you watch as the derelict remains of your ship fade into the distance.\n");
+
+		System.out.println(
+				"As the pod hurtles into space, the quiet hum of the engines and the pale flash of the outgoing SOS call fill the enclosure, and, outside of the small window on the pod, you watch as the derelict remains of your ship fade into the distance.\n");
 		System.out.println("You have escaped The Derelict!! Congratulations!");
 	}
-
 
 	// Press any key to continue...
 	private void cont() {
@@ -371,25 +370,24 @@ public class MainGameLoop {
 
 	private void here(Room currentRoom) {
 		System.out.println("Items here: ");
-		for (Item i : currentRoom.getInventory()) 
+		for (Item i : currentRoom.getInventory())
 			System.out.println(i.getId() + " : " + i.getDescShort());
-		
+
 		System.out.println();
 	}
-	
+
 	private void inventory(Player pc) {
 		System.out.println("Items carried: ");
-		
-		if(pc.getItemInv().size() == 0 && pc.getKeyInv().size() == 0)
+
+		if (pc.getItemInv().size() == 0 && pc.getKeyInv().size() == 0)
 			System.out.println("No items are in your inventory!");
-		
-		for (Item i : pc.getItemInv()) 
+
+		for (Item i : pc.getItemInv())
 			System.out.println(i.getId() + " : " + i.getDescShort());
-		
-		
-		for(Item k : pc.getKeyInv())
+
+		for (Item k : pc.getKeyInv())
 			System.out.println(k.getId() + " : " + k.getDescShort());
-		
+
 		System.out.println();
 	}
 
@@ -432,28 +430,30 @@ public class MainGameLoop {
 
 	private void terminalMenu(Player pc) {
 		boolean continueLoop = true;
-		
+
 		while (continueLoop) {
-			if(!keysInserted) {
+			if (!keysInserted) {
 				System.out.println(">> Databanks corrupt.  Please provide datachips to restore system operation:\n");
-				System.out.println("   >> 1: INSERT DATA CHIPS\n"
-								+ "   >> 2: EXIT\n\n");
-				
+				System.out.println("   >> 1: INSERT DATA CHIPS\n" + "   >> 2: EXIT\n\n");
+
 				try {
 					int choice = sc.nextInt();
 
 					switch (choice) {
 					case 1:
-						if(pc.getKeyInv().size() == 6) {
-							System.out.println("As you feed in the datachips, the system buzzes thoughtfully, processing the information, before returning the chips.  A bright blue message flashes to life across the screen.  Looks like it worked!\n");
+						if (pc.getKeyInv().size() == 6) {
+							System.out.println(
+									"As you feed in the datachips, the system buzzes thoughtfully, processing the information, before returning the chips.  A bright blue message flashes to life across the screen.  Looks like it worked!\n");
 							keysInserted = true;
 						}
-						
-						else if(pc.getKeyInv().size() == 0)
-							System.out.println("You insert your fingers into the terminal. Turns out flesh and bone do not contain the needed circuitry for this task.\n");
-							
+
+						else if (pc.getKeyInv().size() == 0)
+							System.out.println(
+									"You insert your fingers into the terminal. Turns out flesh and bone do not contain the needed circuitry for this task.\n");
+
 						else {
-							System.out.println("As you feed in the datachips, the system buzzes thoughtfully before returning the chips with a vivid red error message scrolling across the screen.  It seems you are missing some datachips.\n");
+							System.out.println(
+									"As you feed in the datachips, the system buzzes thoughtfully before returning the chips with a vivid red error message scrolling across the screen.  It seems you are missing some datachips.\n");
 						}
 						break;
 					case 2:
@@ -470,11 +470,9 @@ public class MainGameLoop {
 					System.out.println(">> Invalid selection!\n");
 				}
 			}
-			
+
 			else {
-				System.out.println(">> Launch sequence ready.  Initiate?\n"
-								+ "   >> 1: YES\n"
-								+ "   >> 2: NO\n\n");
+				System.out.println(">> Launch sequence ready.  Initiate?\n" + "   >> 1: YES\n" + "   >> 2: NO\n\n");
 				try {
 					int choice = sc.nextInt();
 
@@ -531,7 +529,8 @@ public class MainGameLoop {
 					System.out.println(">> System operating as expected.\n");
 					break;
 				case 7:
-					System.out.println(">> Escape pod operational. Pod databanks corrupted. Recommend immediate data restoration.\n");
+					System.out.println(
+							">> Escape pod operational. Pod databanks corrupted. Recommend immediate data restoration.\n");
 					break;
 				case 8:
 					System.out.println(">> Exiting to main menu...\n");

@@ -9,15 +9,5 @@ package com.revature.thederelict.enums;
  */
 public enum Interaction {
 
-	GET,
-	PUSH,
-	PRESS,
-	DROP,
-	LOOK,
-	L,
-	USE,
-	HERE,
-	GO,
-	MOVE,
-	INV
+	GET, PUSH, PRESS, DROP, LOOK, L, USE, HERE, GO, MOVE, INV
 }

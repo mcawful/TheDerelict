@@ -20,7 +20,7 @@ public class UnknownActionException extends Exception {
 	public UnknownActionException() {
 		System.out.println("\n>> I can't understand what you're trying to do.\n");
 	}
-	
+
 	/**
 	 * 
 	 * @param message

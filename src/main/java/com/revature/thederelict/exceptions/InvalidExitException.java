@@ -20,7 +20,7 @@ public class InvalidExitException extends Exception {
 	public InvalidExitException() {
 		System.out.println("\n>> You cannot go that way from here.\n");
 	}
-	
+
 	/**
 	 * @param message
 	 */

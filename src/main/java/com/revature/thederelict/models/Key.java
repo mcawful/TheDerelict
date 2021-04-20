@@ -16,9 +16,9 @@ import lombok.Data;
  */
 @Data
 public class Key extends Item {
-	
+
 	private int size;
-	
+
 	private Color color;
 
 	public Key(String id, String descShort, String descLong, List<Interaction> interactions, int size, Color color) {

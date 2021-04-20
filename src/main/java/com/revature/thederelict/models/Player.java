@@ -16,9 +16,9 @@ import lombok.Data;
 public class Player {
 
 	private String name;
-	
+
 	private List<Item> itemInv;
-	
+
 	private List<Item> keyInv;
 
 	/**
@@ -30,7 +30,7 @@ public class Player {
 		this.itemInv = new ArrayList<>();
 		this.keyInv = new ArrayList<>();
 	}
-	
+
 	/**
 	 * 
 	 * @param item
@@ -38,7 +38,7 @@ public class Player {
 	public void addItem(Item item) {
 		this.itemInv.add(item);
 	}
-	
+
 	/**
 	 * 
 	 * @param item
@@ -46,7 +46,7 @@ public class Player {
 	public void removeItem(Item item) {
 		this.itemInv.remove(item);
 	}
-	
+
 	/**
 	 * 
 	 * @param key

@@ -18,11 +18,11 @@ import lombok.Data;
 public abstract class Room {
 
 	private final String name;
-	
+
 	private final String description;
-	
+
 	private List<Item> inventory;
-	
+
 	private List<Exit> exits;
 
 	/**
@@ -36,7 +36,7 @@ public abstract class Room {
 		this.inventory = new ArrayList<>();
 		this.exits = new ArrayList<>();
 	}
-	
+
 	/**
 	 * 
 	 * @param item
@@ -44,7 +44,7 @@ public abstract class Room {
 	public void addItem(Item item) {
 		this.inventory.add(item);
 	}
-	
+
 	/**
 	 * 
 	 * @param item
@@ -52,7 +52,7 @@ public abstract class Room {
 	public void removeItem(Item item) {
 		this.inventory.remove(item);
 	}
-	
+
 	/**
 	 * 
 	 * @param exit

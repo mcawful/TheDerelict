@@ -20,7 +20,7 @@ public class ItemNotFoundException extends Exception {
 	public ItemNotFoundException() {
 		System.out.println("\n>> I don't know what that thing is.\n");
 	}
-	
+
 	/**
 	 * 
 	 * @param message
