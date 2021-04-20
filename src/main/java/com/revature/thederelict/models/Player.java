@@ -19,7 +19,7 @@ public class Player {
 	
 	private List<Item> itemInv;
 	
-	private List<Key> keyInv;
+	private List<Item> keyInv;
 
 	/**
 	 * @param name
@@ -31,5 +31,27 @@ public class Player {
 		this.keyInv = new ArrayList<>();
 	}
 	
+	/**
+	 * 
+	 * @param item
+	 */
+	public void addItem(Item item) {
+		this.itemInv.add(item);
+	}
 	
+	/**
+	 * 
+	 * @param item
+	 */
+	public void removeItem(Item item) {
+		this.itemInv.remove(item);
+	}
+	
+	/**
+	 * 
+	 * @param key
+	 */
+	public void addKey(Item key) {
+		this.keyInv.add(key);
+	}
 }

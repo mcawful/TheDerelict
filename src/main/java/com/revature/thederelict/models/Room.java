@@ -37,5 +37,27 @@ public abstract class Room {
 		this.exits = new ArrayList<>();
 	}
 	
+	/**
+	 * 
+	 * @param item
+	 */
+	public void addItem(Item item) {
+		this.inventory.add(item);
+	}
 	
+	/**
+	 * 
+	 * @param item
+	 */
+	public void removeItem(Item item) {
+		this.inventory.remove(item);
+	}
+	
+	/**
+	 * 
+	 * @param exit
+	 */
+	public void addExit(Exit exit) {
+		this.exits.add(exit);
+	}
 }

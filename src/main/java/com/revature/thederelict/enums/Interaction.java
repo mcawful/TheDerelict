@@ -15,5 +15,9 @@ public enum Interaction {
 	DROP,
 	LOOK,
 	L,
-	USE
+	USE,
+	HERE,
+	GO,
+	MOVE,
+	INV
 }
